@@ -40,10 +40,10 @@ H(f(x,y))=
 
 \left[\begin{array}{cccc} 
     \frac{\partial^2f}{\partial x^2}  &  \frac{\partial^2f}{\partial y\partial x}\\ 
-   \frac{\partial^2f}{\partial x\partial y}  &  \frac{\partial^2f}{\partial y^2}    
+   \frac{\partial^2f}{\partial x\partial y}  &  \frac{\partial^2f}{\partial y^2}     
 \end{array}
-
 \right]
+
 $$
 H矩阵的判别式为
 $$
@@ -57,12 +57,11 @@ $$
 通过特定核间的卷积计算二阶偏导数。通过特定核间的卷积计算二阶偏导数，这样便能计算出H矩阵的三个矩阵元素$L_{xx}$, $L_{xy}$, $L_{yy}$从而计算出H矩阵：
 $$
 H(x,\sigma)=
-
-\left[\begin{array}{cccc} 
+\left[
+\begin{array}{cccc} 
     L_{xx}(x,\sigma)  &  L_{xy}(x,\sigma)\\ 
    L_{yx}(x,\sigma)  &  L_{yy}(x,\sigma)
 \end{array}
-
 \right]
 $$
 ##### 2. 构建尺度空间
