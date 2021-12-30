@@ -174,10 +174,10 @@ orig0=im2uint8(im2double(orig0).*im2double(re2));
 │   └── cv_Image_registration_.m
 ├── input
 │   ├── new1.png
-│	├── new2.png
-│	├── new3.png
-│	├── old1.png
-│	├── old2.png
+│	  ├── new2.png
+│	  ├── new3.png
+│	  ├── old1.png
+│	  ├── old2.png
 │   └── old3.png
 └── output
     ├── result1.png
