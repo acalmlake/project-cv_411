@@ -54,12 +54,10 @@ $$\
 通过特定核间的卷积计算二阶偏导数。通过特定核间的卷积计算二阶偏导数，这样便能计算出H矩阵的三个矩阵元素$L_{xx}$, $L_{xy}$, $L_{yy}$从而计算出H矩阵：\
 $$
 H(x,\sigma)=
-\left[
-\begin{array}{cccc} 
-    L_{xx}(x,\sigma)  &  L_{xy}(x,\sigma)\\\
+\begin{bmatrix} 
+    L_{xx}(x,\sigma)  &  L_{xy}(x,\sigma) \\\
    L_{yx}(x,\sigma)  &  L_{yy}(x,\sigma)
-\end{array}
-\right]
+\end{bmatrix}
 $$
 ##### 2. 构建尺度空间
 Surf的尺度空间由O组L层组成,不同组间图像的尺寸都是一致的，但不同组间使用的盒式滤波器的模板尺寸逐渐增大，同一组间不同层间使用相同尺寸的滤波器，但是滤波器的模糊系数逐渐增大。
@@ -103,16 +101,16 @@ $$
 
 使用imwrap函数对图像进行仿射变换，输入参数是待变换的二维图像image和一个3x3的仿射变换矩阵tform，imwrap原理：
 输入图像上的点(u,v)对应输出图像上的点(x,y)，关系式为：
-                  ![image](https://user-images.githubusercontent.com/94790247/147748635-b494dfd1-f6cf-46f0-b8aa-418f07a41307.png)
+                  ![image](https://user-images.githubusercontent.com/94790247/147749169-0a75a05b-2366-4931-b855-f279a41234af.png)
 在计算输出图像的所有(x,y)对的时候，需要乘以A的逆矩阵然后在输入图像中插值得到输出图像。
 
 我们的目标是实现一种从旧图像到新图像之间的渐变效果，为了达到这个效果，首先构造以旧图像中心为中心的，幅度从中心值1往边缘减小至0的函数矩阵。我们选择的是经过修正的巴特沃斯滤波器函数，定义原来图片的宽为DX，长为DY，点(x,y)的修正距离D(x,y)定义为：
-                  ![img](file:///C:/Users/wangx/AppData/Local/Temp/msohtmlclip1/01/clip_image010.png)
-巴沃斯特函数：
-              ![img](file:///C:/Users/wangx/AppData/Local/Temp/msohtmlclip1/01/clip_image012.png)
-D_0是修正截止距离，我们选择D_0=D(0.75DX,0.75DY)；n是阶数，选择n=8。
+                  ![image](https://user-images.githubusercontent.com/94790247/147749195-8d1495f3-4475-4ba9-afee-cc711b6a8652.png)
+巴特沃斯函数：
+              ![image](https://user-images.githubusercontent.com/94790247/147749216-1d117da4-ad97-45cf-90c1-b5f643a933d1.png)
+$D_0$是修正截止距离，我们选择$D_0=D(0.75DX,0.75DY)$；n是阶数，选择n=8。
 
-将H_n (x,y)与旧图像相乘得到输出部分1，再把H_n (x,y)通过相同的变换矩阵tform进行仿射变换后，取反再与新图像相乘得到输出部分2，把部分1、2相加即可得到最终结果
+将$H_n (x,y)$与旧图像相乘得到输出部分1，再把$H_n (x,y)$通过相同的变换矩阵tform进行仿射变换后，取反再与新图像相乘得到输出部分2，把部分1、2相加即可得到最终结果
 ## 代码实现
 我们采取的样本分为小图（旧照片）匹配大图（新照片）和大图（旧照片）匹配大图（新照片）两种模式，分别采用SURF算法和KAZE算法进行实现。
 
