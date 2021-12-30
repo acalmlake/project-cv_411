@@ -38,7 +38,7 @@ SURF的算法一种稳健的局部特征点检测和描述算法，其步骤如�
 $$
 H(f(x,y))=
 \begin{bmatrix}
-    \frac{\partial^2f}{\partial x^2}  &  \frac{\partial^2f}{\partial y\partial x}\\ 
+    \frac{\partial^2f}{\partial x^2}  &  \frac{\partial^2f}{\partial y\partial x}\\\ 
    \frac{\partial^2f}{\partial x\partial y}  &  \frac{\partial^2f}{\partial y^2}     
 \end{bmatrix}
 $$\
@@ -56,7 +56,7 @@ $$
 H(x,\sigma)=
 \left[
 \begin{array}{cccc} 
-    L_{xx}(x,\sigma)  &  L_{xy}(x,\sigma)\\ 
+    L_{xx}(x,\sigma)  &  L_{xy}(x,\sigma)\\ \
    L_{yx}(x,\sigma)  &  L_{yy}(x,\sigma)
 \end{array}
 \right]
