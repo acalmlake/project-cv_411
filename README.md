@@ -75,6 +75,12 @@ Surf算法中在特征点周围取一个$4\times 4$的矩形区域块，但是�
 
 ##### 6. 特征点匹配
 Surf通过计算两个特征点间的欧式距离来确定匹配度，欧氏距离越短，代表两个特征点的匹配度越好。Surf还加入了Hessian矩阵迹的判断，如果两个特征点的矩阵迹正负号相同，代表这两个特征具有相同方向上的对比度变化，如果不同，说明这两个特征点的对比度变化方向是相反的，即使欧氏距离为0，也直接予以排除。
+```
+ptsOriginal  = detectSURFFeatures(original);
+ptsDistorted = detectSURFFeatures(distorted);
+[featuresOriginal,  validPtsOriginal]  = extractFeatures(original,  ptsOriginal);
+[featuresDistorted, validPtsDistorted] = extractFeatures(distorted, ptsDistorted);
+```
 #### KAZE 算法
 
 KAZE算法是非线性扩散滤波法。具体地，非线性扩散滤波法是将图像亮度（L）在不同尺度上的变化视为某种形式的流动函数（flow function）的散度（divergence），可以通过非线性偏微分方程来描述：
@@ -86,11 +92,21 @@ $$
 c(x,y,t)=g(|\nabla L_\sigma(x,y,t)|)
 $$
 由于非线性微分方程没有解析解，一般通过数值分析的方法进行迭代求解。传统上采用显式差分格式的求解方法只能采用小步长，收敛缓慢。KAZE中采用AOS(Additive Operator Splitting)算法对结果进行收敛。
-
+```
+ptsOriginal  = detectKAZEFeatures(original);
+ptsDistorted = detectKAZEFeatures(distorted);
+```
 ### 2.构建变换矩阵
 
 这一部分的主要内容是通过匹配点对构建图像序列之间的变换矩阵。实验中通过Matlab自带的estimateGeometricTransform2D函数实现。
+```
+indexPairs = matchFeatures(featuresOriginal, featuresDistorted);
 
+matchedOriginal  = validPtsOriginal(indexPairs(:,1));
+matchedDistorted = validPtsDistorted(indexPairs(:,2));
+[tform, inlierIdx] = estimateGeometricTransform2D(...
+    matchedDistorted, matchedOriginal,'similarity','Maxdistance',1.5,'Confidence',99,'MaxNumTrials',1000);
+```
 ### 3.新旧图像融合
 
 使用imwrap函数对图像进行仿射变换，输入参数是待变换的二维图像image和一个3x3的仿射变换矩阵tform，imwrap原理：
@@ -105,20 +121,41 @@ $$
 巴特沃斯函数：\
               ![image](https://user-images.githubusercontent.com/94790247/147749216-1d117da4-ad97-45cf-90c1-b5f643a933d1.png)
 
-$D_0$是修正截止距离，我们选择$D_0=D(0.75DX,0.75DY)$；n是阶数，选择n=8。
+$D_0$是修正截止距离，我们选择$D_0=D(0.76DX,0.76DY)$；n是阶数，选择n=8。
 
 将$H_n (x,y)$与旧图像相乘得到输出部分1，再把$H_n (x,y)$通过相同的变换矩阵tform进行仿射变换后，取反再与新图像相乘得到输出部分2，把部分1、2相加即可得到最终结果。
-## 代码实现
-我们采取的样本分为小图（旧照片）匹配大图（新照片）和大图（旧照片）匹配大图（新照片）两种模式，实验发现采用SURF算法进行小图匹配大图效果较好，用KAZE算法进行大图匹配大图效果较好。
-
+```
+f1=im2double(dist0);
+t1=zeros(size(f1)); 
+t2=t1;
+LD=norm([d0-1/2,d0-1/2],2);
+tx=size(t1,2);
+ty=size(t1,1);
+for k=1:3
+for j=1:size(t1,1)
+    for i=1:size(t1,2)
+        d=norm([i/tx-0.5,j/ty-0.5],2);
+        t2(j,i,k)=1-1/(1+(d/LD)^p0);
+        t1(j,i,k)=1-t2(j,i,k);
+    end
+end
+end
+dist0=im2uint8(im2double(dist0).*t1);
+t1=im2uint8(t1);
+t2=im2uint8(t2);
+outputView = imref2d(size(original));
+recovered  = imwarp(dist0,tform,'OutputView',outputView);
+re2=imwarp(t1,tform,'OutputView',outputView);
+re2=255-re2;
+orig0=im2uint8(im2double(orig0).*im2double(re2));
+```
 
 ## 功能展示
-### 小图（旧照片）匹配大图（新照片）
-### 大图（旧照片）匹配大图（新照片）
+### 
 
 ## 工程结构
 
 ## 运行说明
 运行环境：\
 MATLAB 2021a\
-Computer Vision Toolbox\
+Computer Vision Toolbox
