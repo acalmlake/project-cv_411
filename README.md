@@ -151,23 +151,39 @@ orig0=im2uint8(im2double(orig0).*im2double(re2));
 ```
 
 ## 功能展示
-- 故宫
+- 故宫\
 ![old1](https://user-images.githubusercontent.com/94790247/147755408-e9e52407-edde-4679-b15c-ad53a1fd50ab.png)
 ![new1](https://user-images.githubusercontent.com/94790247/147755480-6c23d6d2-9ca3-4355-9fe8-a3139cdf0665.png)
 ![result1](https://user-images.githubusercontent.com/94790247/147755789-da484249-875d-48ea-9b99-6ea26feec98d.png)
 
-- 教堂
+- 教堂\
 ![old2](https://user-images.githubusercontent.com/94790247/147755878-bcede508-4e6e-44b9-a01c-a83b7cb57df4.png)
 ![new2](https://user-images.githubusercontent.com/94790247/147755901-fffbf3ab-fb96-466e-8fb6-ccc414b52d01.png)
 ![result2](https://user-images.githubusercontent.com/94790247/147755796-8595d6e0-ceef-4c48-9d89-01d101615261.png)
 
-- 桥 
+- 桥\
 ![old3](https://user-images.githubusercontent.com/94790247/147755929-7a975b31-ba1c-4444-9276-080b68079f6a.png)
 ![new3](https://user-images.githubusercontent.com/94790247/147755940-28d39667-d5b8-4534-96b9-86ac975b4b93.png)
 ![result3](https://user-images.githubusercontent.com/94790247/147755818-c3239c5b-3b17-4e5c-8e56-81751ecd6418.png)
 
 ## 工程结构
-
+```
+.
+├── code
+│   ├── main.m
+│   └── cv_Image_registration_.m
+├── input
+│   ├── new1.png
+│	├── new2.png
+│	├── new3.png
+│	├── old1.png
+│	├── old2.png
+│   └── old3.png
+└── output
+    ├── result1.png
+    ├── result2.png
+    └── result3.png
+```
 ## 运行说明
 运行环境：\
 MATLAB 2021a\
