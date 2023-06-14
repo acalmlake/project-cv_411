@@ -4,7 +4,7 @@
 PB18051035 王旭 调研 代码 报告\
 PB18151852 刘宇 调研 代码 报告
 ## 问题描述
-对图像作变幻，看起来是一件相对简单且有趣的事。所以，我们在选了A Look Into the Past 为主题进行实验，通过残存的光影体会照片里的前世今生。
+对图像作变幻，看起来是一件相对简单且有趣的事。所以，我们在选了A Look Into the Past 为主题进行实验，通过残存的光影体会照片里建筑的前世今生。
 
 我们期望通过新旧照片特征匹配，实现图相配准(Image registration)，让旧照片融入到新照片中，达到A Look Into the Past的效果。
 ## 原理分析
@@ -151,6 +151,7 @@ orig0=im2uint8(im2double(orig0).*im2double(re2));
 ```
 
 ## 功能展示
+
 - 故宫\
 ![old1](https://user-images.githubusercontent.com/94790247/147755408-e9e52407-edde-4679-b15c-ad53a1fd50ab.png)
 ![new1](https://user-images.githubusercontent.com/94790247/147755480-6c23d6d2-9ca3-4355-9fe8-a3139cdf0665.png)
@@ -161,7 +162,7 @@ orig0=im2uint8(im2double(orig0).*im2double(re2));
 ![new2](https://user-images.githubusercontent.com/94790247/147755901-fffbf3ab-fb96-466e-8fb6-ccc414b52d01.png)
 ![result2](https://user-images.githubusercontent.com/94790247/147755796-8595d6e0-ceef-4c48-9d89-01d101615261.png)
 
-- 桥\
+- 大桥\
 ![old3](https://user-images.githubusercontent.com/94790247/147755929-7a975b31-ba1c-4444-9276-080b68079f6a.png)
 ![new3](https://user-images.githubusercontent.com/94790247/147755940-28d39667-d5b8-4534-96b9-86ac975b4b93.png)
 ![result3](https://user-images.githubusercontent.com/94790247/147755818-c3239c5b-3b17-4e5c-8e56-81751ecd6418.png)
